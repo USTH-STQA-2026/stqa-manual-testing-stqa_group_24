@@ -71,7 +71,13 @@
 
 | Mã TC | Mục tiêu kiểm thử | Tiền điều kiện | Bước thực hiện | Dữ liệu đầu vào | Kết quả mong đợi | REQ | Kỹ thuật |
 |-------|-------------------|---------------|---------------|-----------------|------------------|-----|---------|
-| | | | | | | | |
+| TC-01 | Đăng nhập thành công với tài khoản và mật khẩu hợp lệ | 1. Người dùng đang ở trang đăng nhập. 2. Tài khoản đã tồn tại trên hệ thống. | 1. Nhập Email hợp lệ. 2. Nhập Mật khẩu hợp lệ. 3. Nhấn nút “Đăng nhập”. | Email: `librarian@library.com`, Mật khẩu: `admin123` | - Chuyển hướng sang trang chủ thành công. - Trên AppBar hiển thị chính xác tên người dùng + vai trò. | REQ-01 | Decision Table (True/True) |
+| TC-02 | Báo lỗi khi nhập Email chưa đăng ký hệ thống | Người dùng đang ở trang đăng nhập. | 1. Nhập Email chưa tồn tại. 2. Nhập Mật khẩu bất kỳ. 3. Nhấn nút "Đăng nhập". | Email: `nobody@test.com`, Mật khẩu: `anything` | Hiển thị thông báo lỗi: "Không tìm thấy thành viên". | REQ-01 | Decision Table (False/True) |
+| TC-03 | Báo lỗi khi nhập đúng Email nhưng sai Mật khẩu | 1. Người dùng đang ở trang đăng nhập. 2. Email đã tồn tại trên hệ thống. | 1. Nhập Email đúng. 2. Nhập Mật khẩu sai. 3. Nhấn nút "Đăng nhập". | Email: `ba.nguyen@email.com`, Mật khẩu: `wrongpassword` | Hiển thị thông báo lỗi: "Mật khẩu không đúng". | REQ-01 | Decision Table (True/False) |
+| TC-04 | Báo lỗi khi bỏ trống cả Email và Mật khẩu | Người dùng đang ở trang đăng nhập. | 1. Để trống trường Email. 2. Để trống trường Mật khẩu. 3. Nhấn nút "Đăng nhập". | Email: (để trống), Mật khẩu: (để trống) | Hiển thị thông báo lỗi: "Vui lòng nhập email và mật khẩu". | REQ-01 | Decision Table (Trống/Trống) |
+| TC-05 | Báo lỗi khi chỉ nhập Mật khẩu và bỏ trống Email | Người dùng đang ở trang đăng nhập. | 1. Để trống trường Email. 2. Nhập Mật khẩu bất kỳ. 3. Nhấn nút "Đăng nhập". | Email: (để trống), Mật khẩu: `anything` | Hiển thị thông báo lỗi: "Vui lòng nhập email và mật khẩu". | REQ-01 | EP (Tương đương vùng Trống) |
+| TC-06 | Báo lỗi khi chỉ nhập Email và bỏ trống Mật khẩu | Người dùng đang ở trang đăng nhập. | 1. Nhập Email hợp lệ. 2. Để trống trường Mật khẩu. 3. Nhấn nút "Đăng nhập". | Email: `librarian@library.com`, Mật khẩu: (để trống) | Hiển thị thông báo lỗi: "Vui lòng nhập email và mật khẩu". | REQ-01 | EP (Tương đương vùng Trống) |
+| TC-07 | Báo lỗi khi nhập cả Email sai và Mật khẩu sai | Người dùng đang ở trang đăng nhập. | 1. Nhập Email chưa tồn tại. 2. Nhập Mật khẩu sai. 3. Nhấn nút "Đăng nhập". | Email: `nobody@test.com`, Mật khẩu: `wrongpassword` | Hiển thị thông báo lỗi: "Không tìm thấy thành viên”. | REQ-01 | Decision Table (False/False) |
 
 ---
 

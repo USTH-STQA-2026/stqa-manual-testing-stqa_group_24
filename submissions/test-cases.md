@@ -6,8 +6,8 @@
 
 | Thông tin | |
 |---|---|
-| **Nhóm** | `<!-- Tên nhóm -->` |
-| **Ngày tạo** | `<!-- DD/MM/YYYY -->` |
+| **Nhóm** | Group 24 |
+| **Ngày tạo** | 20/05/2026 |
 | **Hệ thống** | https://stqa.rbc.vn |
 | **Tham chiếu** | SRS v1.0 |
 
@@ -71,13 +71,13 @@
 
 | Mã TC | Mục tiêu kiểm thử | Tiền điều kiện | Bước thực hiện | Dữ liệu đầu vào | Kết quả mong đợi | REQ | Kỹ thuật |
 |-------|-------------------|---------------|---------------|-----------------|------------------|-----|---------|
-| TC-01 | Đăng nhập thành công với tài khoản và mật khẩu hợp lệ | 1. Người dùng đang ở trang đăng nhập. 2. Tài khoản đã tồn tại trên hệ thống. | 1. Nhập Email hợp lệ. 2. Nhập Mật khẩu hợp lệ. 3. Nhấn nút “Đăng nhập”. | Email: `librarian@library.com`, Mật khẩu: `admin123` | - Chuyển hướng sang trang chủ thành công. - Trên AppBar hiển thị chính xác tên người dùng + vai trò. | REQ-01 | Decision Table (True/True) |
-| TC-02 | Báo lỗi khi nhập Email chưa đăng ký hệ thống | Người dùng đang ở trang đăng nhập. | 1. Nhập Email chưa tồn tại. 2. Nhập Mật khẩu bất kỳ. 3. Nhấn nút "Đăng nhập". | Email: `nobody@test.com`, Mật khẩu: `anything` | Hiển thị thông báo lỗi: "Không tìm thấy thành viên". | REQ-01 | Decision Table (False/True) |
-| TC-03 | Báo lỗi khi nhập đúng Email nhưng sai Mật khẩu | 1. Người dùng đang ở trang đăng nhập. 2. Email đã tồn tại trên hệ thống. | 1. Nhập Email đúng. 2. Nhập Mật khẩu sai. 3. Nhấn nút "Đăng nhập". | Email: `ba.nguyen@email.com`, Mật khẩu: `wrongpassword` | Hiển thị thông báo lỗi: "Mật khẩu không đúng". | REQ-01 | Decision Table (True/False) |
-| TC-04 | Báo lỗi khi bỏ trống cả Email và Mật khẩu | Người dùng đang ở trang đăng nhập. | 1. Để trống trường Email. 2. Để trống trường Mật khẩu. 3. Nhấn nút "Đăng nhập". | Email: (để trống), Mật khẩu: (để trống) | Hiển thị thông báo lỗi: "Vui lòng nhập email và mật khẩu". | REQ-01 | Decision Table (Trống/Trống) |
-| TC-05 | Báo lỗi khi chỉ nhập Mật khẩu và bỏ trống Email | Người dùng đang ở trang đăng nhập. | 1. Để trống trường Email. 2. Nhập Mật khẩu bất kỳ. 3. Nhấn nút "Đăng nhập". | Email: (để trống), Mật khẩu: `anything` | Hiển thị thông báo lỗi: "Vui lòng nhập email và mật khẩu". | REQ-01 | EP (Tương đương vùng Trống) |
-| TC-06 | Báo lỗi khi chỉ nhập Email và bỏ trống Mật khẩu | Người dùng đang ở trang đăng nhập. | 1. Nhập Email hợp lệ. 2. Để trống trường Mật khẩu. 3. Nhấn nút "Đăng nhập". | Email: `librarian@library.com`, Mật khẩu: (để trống) | Hiển thị thông báo lỗi: "Vui lòng nhập email và mật khẩu". | REQ-01 | EP (Tương đương vùng Trống) |
-| TC-07 | Báo lỗi khi nhập cả Email sai và Mật khẩu sai | Người dùng đang ở trang đăng nhập. | 1. Nhập Email chưa tồn tại. 2. Nhập Mật khẩu sai. 3. Nhấn nút "Đăng nhập". | Email: `nobody@test.com`, Mật khẩu: `wrongpassword` | Hiển thị thông báo lỗi: "Không tìm thấy thành viên”. | REQ-01 | Decision Table (False/False) |
+| TC-01 | Test successful login with valid email and password | 1. User is on the login page. 2. Account already exists in the system. | 1. Enter a valid Email. 2. Enter a valid Password. 3. Click the "Login" button. | Email: `librarian@library.com`, Mật khẩu: `admin123` | - Redirected to the homepage successfully. - The AppBar accurately displays the username + role. | REQ-01 | Decision Table (True/True) |
+| TC-02 | Test error message when entering an unregistered Email | User is on the login page. | 1. Enter a non-existent Email. 2. Enter any Password. 3. Click the "Login" button. | Email: `nobody@test.com`, Mật khẩu: `anything` | Displays error message: "Không tìm thấy thành viên". | REQ-01 | Decision Table (False/True) |
+| TC-03 | Test error message when entering a correct Email but incorrect Password | 1. User is on the login page. 2. Email already exists in the system. | 1. Enter the correct Email. 2. Enter an incorrect Password. 3. Click the "Login" button. | Email: `ba.nguyen@email.com`, Mật khẩu: `wrongpassword` | Displays error message: "Mật khẩu không đúng". | REQ-01 | Decision Table (True/False) |
+| TC-04 | Test error message when leaving both Email and Password blank | User is on the login page. | 1. Leave the Email field blank. 2. Leave the Password field blank. 3. Click the "Login" button. | Email: (Leave blank), Mật khẩu: (Leave blank) | Displays error message: "Vui lòng nhập email và mật khẩu". | REQ-01 | Decision Table (Blank/Blank) |
+| TC-05 | Test error message when entering only Password and leaving Email blank | User is on the login page. | 1. Leave the Email field blank. 2. Enter any Password. 3. Click the "Login" button. | Email: (Leave blank), Mật khẩu: `anything` | Displays error message: "Vui lòng nhập email và mật khẩu". | REQ-01 | Equivalence Partitioning (Empty) |
+| TC-06 | Test error message when entering only Email and leaving Password blank | User is on the login page. | 1. Enter a valid Email. 2. Leave the Password field blank. 3. Click the "Login" button. | Email: `librarian@library.com`, Mật khẩu: (Leave blank) | Displays error message: "Vui lòng nhập email và mật khẩu". | REQ-01 | Equivalence Partitioning (Empty) |
+| TC-07 | Test error message when entering both an incorrect Email and incorrect Password | User is on the login page. | 1. Enter a non-existent Email. 2. Enter an incorrect Password. 3. Click the "Login" button. | Email: `nobody@test.com`, Mật khẩu: `wrongpassword` | Displays error message: "Không tìm thấy thành viên”. | REQ-01 | Decision Table (False/False) |
 
 ---
 

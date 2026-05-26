@@ -7,8 +7,8 @@
 |---|---|
 | **Nhóm** | Group 24 |
 | **Ngày thực thi** | 19/05/2026 |
-| **Trình duyệt** | Firefox 150.0.3 |
-| **Hệ điều hành** | Linux |
+| **Trình duyệt** | Google Chrome |
+| **Hệ điều hành** | Windows 11 |
 
 ---
 
@@ -23,6 +23,18 @@
 | TC-05 | Đăng nhập | Hiển thị thông báo lỗi: "Vui lòng nhập email và mật khẩu". | Hiện thông báo lỗi dưới phần nhập email: "Vui lòng nhập email và mật khẩu" | Pass | ![Laziness took over](./assets/Blank-email.png) | - | 
 | TC-06 | Đăng nhập | Hiển thị thông báo lỗi: "Vui lòng nhập email và mật khẩu". | Hiện thông báo lỗi dưới phần nhập email: "Vui lòng nhập email và mật khẩu" | Pass | ![](./assets/Blank-pass.png) | - |
 | TC-07 | Đăng nhập | Hiển thị thông báo lỗi: "Không tìm thấy thành viên". | Hiện thông báo lỗi dưới phần nhập email: "Không tìm thấy thành viên" | Pass | ![](./assets/Wrong-Email-Pass.png) | - |
+| TC-32 | Return Book | Return borrowed book successfully | `<!-- ghi kết quả thực tế sau khi chạy -->` | Pass/Fail | `<!-- ảnh nếu có -->` | `<!-- BUG-xx nếu Fail, nếu không thì - -->` |
+| TC-33 | Return Book | Book status changes back to “Có sẵn” after return | `<!-- ghi kết quả thực tế -->` | Pass/Fail | `<!-- ảnh nếu có -->` | - |
+| TC-34 | Return Book / Borrow Record Lookup | Member cannot return another member’s borrowed book | `<!-- ghi kết quả thực tế -->` | Pass/Fail | `<!-- ảnh nếu có -->` | - |
+| TC-35 | Return Book | Overdue warning is displayed when returning overdue book | `<!-- ghi kết quả thực tế -->` | Pass/Fail | `<!-- ảnh nếu có -->` | - |
+| TC-36 | Overdue Handling | Librarian can trigger overdue checking | `<!-- ghi kết quả thực tế -->` | Pass/Fail | `<!-- ảnh nếu có -->` | - |
+| TC-37 | Overdue Handling | Overdue record is marked as “Quá hạn” | `<!-- ghi kết quả thực tế -->` | Pass/Fail | `<!-- ảnh nếu có -->` | - |
+| TC-38 | Overdue Handling | Member can see their own overdue record | `<!-- ghi kết quả thực tế -->` | Pass/Fail | `<!-- ảnh nếu có -->` | - |
+| TC-39 | Member Management | Librarian can add a valid new member | `<!-- ghi kết quả thực tế -->` | Pass/Fail | `<!-- ảnh nếu có -->` | - |
+| TC-40 | Member Management | Normal member cannot add new member | `<!-- ghi kết quả thực tế -->` | Pass/Fail | `<!-- ảnh nếu có -->` | - |
+| TC-41 | Member Management | Reject email without dot in domain | `<!-- ghi kết quả thực tế -->` | Pass/Fail | `<!-- ảnh nếu có -->` | - |
+| TC-42 | Member Management | Reject email missing @ | `<!-- ghi kết quả thực tế -->` | Pass/Fail | `<!-- ảnh nếu có -->` | - |
+| TC-43 | Member Management | Reject duplicated email | `<!-- ghi kết quả thực tế -->` | Pass/Fail | `<!-- ảnh nếu có -->` | - |
 
 ---
 

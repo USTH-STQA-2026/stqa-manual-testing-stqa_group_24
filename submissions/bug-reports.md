@@ -11,88 +11,6 @@
 
 ---
 
-## BUG-01
-
-| Thuộc tính | Chi tiết |
-|-----------|---------|
-| **Mã lỗi** | BUG-01 |
-| **TC liên quan** | `<!-- TC-xx -->` |
-| **REQ liên quan** | `<!-- REQ-xx -->` |
-| **Mức độ** | `<!-- High / Medium / Low -->` |
-| **Người phát hiện** | `<!-- Họ tên thành viên -->` |
-| **Ngày phát hiện** | `<!-- DD/MM/YYYY -->` |
-| **Trạng thái** | `<!-- Open / Closed -->` |
-
-**Tiêu đề:**
-`<!-- Mô tả hành vi lỗi cụ thể -->`
-
-**Môi trường:**
-- Trình duyệt: Chrome `<!-- version -->`
-- Hệ điều hành: `<!-- OS -->`
-- Ngôn ngữ giao diện: Tiếng Việt
-
-**Điều kiện tiên quyết:**
-`<!-- VD: Trang đăng nhập đã mở, dữ liệu đã reset -->`
-
-**Bước tái hiện:**
-1. `<!-- Bước 1 -->`
-2. `<!-- Bước 2 -->`
-3. `<!-- Bước 3 -->`
-
-**Kết quả mong đợi:**
-`<!-- Kết quả đúng theo SRS -->`
-
-**Kết quả thực tế:**
-`<!-- Kết quả hệ thống thật sự trả về -->`
-
-**Tác động:**
-`<!-- VD: Vi phạm quy tắc nghiệp vụ cốt lõi, cho phép mượn vượt giới hạn -->`
-
-**Minh chứng:**
-`<!-- Đính kèm ảnh chụp màn hình nếu có -->`
-
-**Đề xuất xử lý:**
-`<!-- Gợi ý cách sửa lỗi nếu có -->` 
-
----
-
-## BUG-02
-
-| Thuộc tính | Chi tiết |
-|-----------|---------|
-| **Mã lỗi** | BUG-02 |
-| **TC liên quan** | `<!-- TC-xx -->` |
-| **REQ liên quan** | `<!-- REQ-xx -->` |
-| **Mức độ** | `<!-- High / Medium / Low -->` |
-| **Người phát hiện** | `<!-- Họ tên thành viên -->` |
-| **Ngày phát hiện** | `<!-- DD/MM/YYYY -->` |
-| **Trạng thái** | `<!-- Open / Closed -->` |
-
-**Tiêu đề:**
-`<!-- Mô tả hành vi lỗi -->`
-
-**Bước tái hiện:**
-1. `<!-- -->`
-2. `<!-- -->`
-3. `<!-- -->`
-
-**Kết quả mong đợi:**
-`<!-- -->`
-
-**Kết quả thực tế:**
-`<!-- -->`
-
-**Tác động:**
-`<!-- -->`
-
-**Minh chứng:**
-`<!-- -->`
-
-**Đề xuất xử lý:**
-`<!-- -->`
-
----
-
 ## BUG-03
 
 | Thuộc tính | Chi tiết |
@@ -239,3 +157,104 @@ Thông báo lỗi sai làm người dùng hiểu nhầm rằng email bị sai đ
 
 **Đề xuất xử lý:**  
 Kiểm tra thứ tự xử lý validation. Hệ thống cần nhận diện email hợp lệ trước, sau đó kiểm tra email đã tồn tại để hiển thị đúng thông báo lỗi trùng email.
+
+---
+
+## BUG-06
+
+| Thuộc tính | Chi tiết |
+|-----------|---------|
+| **Mã lỗi** | BUG-06 |
+| **TC liên quan** | TC-33 |
+| **REQ liên quan** | REQ-05 |
+| **Mức độ** | Medium |
+| **Người phát hiện** | Tên của bạn |
+| **Ngày phát hiện** | DD/MM/YYYY |
+| **Trạng thái** | Open |
+
+**Tiêu đề:**  
+Hệ thống không hiển thị cảnh báo khi trả sách quá hạn
+
+**Môi trường:**
+- Trình duyệt: Google Chrome
+- Hệ điều hành: Windows
+- Ngôn ngữ giao diện: Tiếng Việt
+
+**Điều kiện tiên quyết:**  
+Dữ liệu đã reset. Đăng nhập bằng tài khoản thành viên `ba.nguyen@email.com`. Phiếu BR001 đang ở trạng thái “Đang mượn” và đã quá hạn.
+
+**Bước tái hiện:**
+1. Đăng nhập bằng `ba.nguyen@email.com`.
+2. Vào tab **Mượn / Trả**.
+3. Tìm phiếu BR001 của sách **Kiểm thử phần mềm nhập môn**.
+4. Nhấn **Trả sách**.
+5. Quan sát thông báo và trạng thái sách.
+
+**Kết quả mong đợi:**  
+Hệ thống cho phép trả sách và hiển thị cảnh báo quá hạn.
+
+**Kết quả thực tế:**  
+Hệ thống cho trả sách, BOOK003 trở lại trạng thái “Có sẵn”, nhưng không thấy cảnh báo quá hạn.
+
+**Tác động:**  
+Người dùng không được thông báo rằng sách đã được trả quá hạn, vi phạm yêu cầu nghiệp vụ của REQ-05.
+
+**Minh chứng:**  
+![TC-33 trước khi trả BR001](./assets/TC-33-truoc-khi-tra-br001.png)  
+![TC-33 sau khi trả BOOK003 có sẵn](./assets/TC-33-sau-khi-tra-book003-co-san.png)
+
+**Đề xuất xử lý:**  
+Bổ sung hoặc sửa logic hiển thị cảnh báo khi người dùng trả sách có hạn trả nhỏ hơn hoặc bằng ngày hiện tại.
+
+---
+
+## BUG-07
+
+| Thuộc tính | Chi tiết |
+|-----------|---------|
+| **Mã lỗi** | BUG-07 |
+| **TC liên quan** | TC-34 |
+| **REQ liên quan** | REQ-05, REQ-08 |
+| **Mức độ** | High |
+| **Người phát hiện** | Tên của bạn |
+| **Ngày phát hiện** | DD/MM/YYYY |
+| **Trạng thái** | Open |
+
+**Tiêu đề:**  
+Thành viên có thể xem và trả sách thuộc phiếu mượn của thành viên khác
+
+**Môi trường:**
+- Trình duyệt: Google Chrome
+- Hệ điều hành: Windows
+- Ngôn ngữ giao diện: Tiếng Việt
+
+**Điều kiện tiên quyết:**  
+Dữ liệu đã reset. Đăng nhập bằng tài khoản thành viên `ba.nguyen@email.com`.
+
+**Bước tái hiện:**
+1. Đăng nhập bằng `ba.nguyen@email.com`.
+2. Vào tab **Mượn / Trả**.
+3. Chuyển sang tab **Tra cứu phiếu mượn**.
+4. Nhập `MEM006` và nhấn **Tra cứu**.
+5. Quan sát kết quả trả về.
+6. Nhấn **Trả sách** trên phiếu BR003 nếu hệ thống cho phép.
+7. Kiểm tra lại trạng thái sách BOOK013 trong tab **Sách**.
+
+**Kết quả mong đợi:**  
+Thành viên không được xem phiếu mượn của thành viên khác và không được trả sách thuộc phiếu của người khác.
+
+**Kết quả thực tế:**  
+Thành viên MEM002 xem được phiếu BR003 của MEM006, thấy nút **Trả sách**, và sau đó BOOK013 hiển thị trạng thái **Có sẵn**.
+
+**Tác động:**  
+Lỗi vi phạm nghiêm trọng về phân quyền và bảo mật dữ liệu. Thành viên có thể thao tác lên phiếu mượn không thuộc về mình.
+
+**Minh chứng:**  
+![TC-34 thành viên thấy phiếu của MEM006](./assets/TC-34-thanh-vien-thay-phieu-cua-mem006.png)  
+![TC-34 BOOK013 trở về có sẵn](./assets/TC-34-book013-tro-ve-co-san.png)
+
+**Đề xuất xử lý:**  
+Giới hạn chức năng tra cứu và thao tác trả sách để thành viên chỉ nhìn thấy và thao tác trên các phiếu mượn của chính mình.
+
+---
+

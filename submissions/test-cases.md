@@ -54,21 +54,47 @@
 | Số sách đang mượn? | < 3 (BVA: 0, 1, 2) | MEM006 (0 sách) | Cho phép mượn |
 | | = 3 (BVA: giới hạn) | MEM đã mượn 3 sách | Từ chối, thông báo vượt giới hạn |
 
-### IDM — Trả sách, xử lý quá hạn, quản lý thành viên (REQ-05, REQ-06, REQ-07)
+### IDM — Return Book (REQ-05)
 
-| Đặc tính | Phân vùng | Giá trị đại diện | Kết quả mong đợi |
+| Characteristic | Partition | Representative Value | Expected Result |
 |---|---|---|---|
-| Trạng thái phiếu khi trả sách | Phiếu đang mượn | Phiếu mượn mới tạo từ BOOK002 | Cho phép trả sách |
-| | Phiếu không thuộc thành viên hiện tại | BOOK013 đang được MEM006 mượn | Thành viên khác không được trả |
-| Trả sách quá hạn | Phiếu quá hạn | BR001 / BOOK003 | Khi trả phải hiển thị cảnh báo quá hạn |
-| Trạng thái sách sau khi trả | Đang mượn → Có sẵn | BOOK002 sau khi trả | Sách chuyển về trạng thái “Có sẵn” |
-| Kiểm tra quá hạn | dueDate ≤ ngày hiện tại | BR001, hạn trả 15/09/2024 | Phiếu được đánh dấu “Quá hạn” |
-| Quyền kiểm tra quá hạn | Thủ thư | librarian@library.com | Được kiểm tra quá hạn |
-| Quyền thêm thành viên | Thủ thư | librarian@library.com | Được thêm thành viên mới |
-| | Thành viên thường | ba.nguyen@email.com | Không được thêm thành viên |
-| Email thành viên mới | Email hợp lệ | nguyen.van.moi@example.com | Tạo thành viên thành công |
-| | Thiếu dấu chấm trong domain | user@domain | Từ chối, báo email không hợp lệ |
-| | Email đã tồn tại | ba.nguyen@email.com | Từ chối, báo email đã tồn tại |
+| Borrow record ownership | Record belongs to the logged-in member | Logged-in member: MEM006; Borrow record: BR003; Book: BOOK013 | The member is allowed to return the book |
+| | Record belongs to another member | Logged-in member: MEM002; Other member: MEM006; Borrow record: BR003; Book: BOOK013 | The member must not be allowed to view or return the book |
+| Borrow record status | Currently borrowed | BR003 — BOOK013, status: Borrowing | The book can be returned |
+| | Already returned | BR004 — BOOK005, status: Returned | The book should not be returned again as an active borrow |
+| Book status after return | Borrowed book is returned | BOOK013 | The book status changes back to “Có sẵn” |
+| Return timing | Overdue return | BR001 — BOOK003, due date: 15/09/2024 | The system displays an overdue warning when the book is returned |
+
+### IDM — Overdue Handling (REQ-06)
+
+| Characteristic | Partition | Representative Value | Expected Result |
+|---|---|---|---|
+| User role triggering overdue check | Librarian | `librarian@library.com` / `admin123` | The user can trigger overdue checking |
+| Borrow record due date | dueDate ≤ current date | BR001 — due date: 15/09/2024 | The borrow record is marked as “Quá hạn” |
+| | dueDate ≤ current date | BR003 — due date: 15/10/2024 | The borrow record is marked as “Quá hạn” if it is overdue at test time |
+| Borrow record visibility after overdue check | Librarian views overdue records | Librarian account | The librarian can view all overdue records |
+| | Member views own overdue record | MEM002 views BR001 | The member can see their own overdue record |
+
+### IDM — Member Management (REQ-07)
+
+| Characteristic | Partition | Representative Value | Expected Result |
+|---|---|---|---|
+| User role accessing member management | Librarian | `librarian@library.com` / `admin123` | The user can access member management and add a new member |
+| | Normal member | `ba.nguyen@email.com` / `password123` | The user cannot access member management or add a new member |
+| Email format | Valid email format | `user@domain.com` | The system allows creating a new member |
+| | Missing dot in domain | `user@domain` | The system rejects the email as invalid |
+| Email uniqueness | Existing email | `ba.nguyen@email.com` | The system rejects the email because it already exists |
+
+### IDM — Borrow Record Lookup / Access Control (REQ-08)
+
+| Characteristic | Partition | Representative Value | Expected Result |
+|---|---|---|---|
+| User role viewing borrow records | Librarian | `librarian@library.com` / `admin123` | The librarian can view all borrow records |
+| | Member | `ba.nguyen@email.com` / `password123` | The member can only view their own borrow records |
+| Borrow record ownership | Own record | MEM002 views BR001 and BR004 | The records are displayed to MEM002 |
+| | Other member’s record | MEM002 tries to view BR003 of MEM006 | The system must not display BR003 to MEM002 |
+| Borrow record information | Required record fields | BR001 / BR003 | The record displays record ID, borrowed book, borrow date, due date, and status |
+
 
 > 💡 **Gợi ý kỹ thuật**: Sử dụng **Phân lớp tương đương (EP)** cho các phân vùng rời rạc, **Phân tích giá trị biên (BVA)** cho các phân vùng số (ví dụ: giới hạn 3 sách). Xem textbook §6.1–6.3.
 

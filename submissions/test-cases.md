@@ -31,15 +31,28 @@
 | Ô nhập có rỗng? | Không rỗng | (giá trị bất kỳ) | Xử lý bình thường |
 | | Rỗng | `""` | Thông báo "Vui lòng nhập..." |
 
-### IDM — Tìm kiếm sách (REQ-03)
+### IDM — View Book List (REQ-02)
 
-| Đặc tính (Characteristic) | Phân vùng (Block) | Giá trị đại diện (Value) | Kết quả mong đợi |
+| Characteristic | Partition | Representative Value | Expected Result |
 |---|---|---|---|
-| Từ khóa có tồn tại trong DB? | Có (tên sách) | `"Flutter"` | Hiển thị sách chứa "Flutter" |
-| | Có (tên tác giả) | `"Nguyễn"` | Hiển thị sách của tác giả Nguyễn |
-| | Không | `"XYZ123"` | Danh sách rỗng |
-| Phân biệt HOA/thường? | Chữ thường | `"flutter"` | Kết quả giống "Flutter" |
-| | Chữ HOA | `"FLUTTER"` | Kết quả giống "Flutter" |
+| User role viewing book list | Librarian | `librarian@library.com` / `admin123` | The librarian can view the book list |
+| | Member | `ba.nguyen@email.com` / `password123` | The member can view the book list |
+| Book initial status | Available | BOOK001 | The book is displayed with status “Có sẵn” |
+| | Borrowed | BOOK003 | The book is displayed with status “Đã mượn” |
+| | Lost | BOOK007 | The book is displayed with status “Thất lạc” if the system supports displaying lost books |
+| Book displayed information | Complete book information | BOOK001 | The system displays title, author, category, publication year, and status |
+
+### IDM — Search and Filter Books (REQ-03)
+
+| Characteristic | Partition | Representative Value | Expected Result |
+|---|---|---|---|
+| Search keyword type | Book title | `Flutter` | The system displays BOOK001 |
+| | Author name | `Nguyễn Minh Đức` | The system displays BOOK001 and BOOK009 |
+| | Non-existent keyword | `xyz_khong_ton_tai` | The system displays “Không tìm thấy sách” |
+| Case sensitivity | Lowercase keyword | `flutter` | The system still displays BOOK001 |
+| | Uppercase keyword | `FLUTTER` | The system still displays BOOK001 |
+| Category filter | Existing category | `Công nghệ` | The system displays only books in the “Công nghệ” category |
+| | Existing category | `Văn học` | The system displays only books in the “Văn học” category |
 
 ### IDM — Mượn sách (REQ-04, REQ-05)
 
@@ -85,15 +98,15 @@
 | | Missing dot in domain | `user@domain` | The system rejects the email as invalid |
 | Email uniqueness | Existing email | `ba.nguyen@email.com` | The system rejects the email because it already exists |
 
-### IDM — Borrow Record Lookup / Access Control (REQ-08)
+### IDM — Borrow Record Lookup (REQ-08)
 
 | Characteristic | Partition | Representative Value | Expected Result |
 |---|---|---|---|
 | User role viewing borrow records | Librarian | `librarian@library.com` / `admin123` | The librarian can view all borrow records |
 | | Member | `ba.nguyen@email.com` / `password123` | The member can only view their own borrow records |
-| Borrow record ownership | Own record | MEM002 views BR001 and BR004 | The records are displayed to MEM002 |
-| | Other member’s record | MEM002 tries to view BR003 of MEM006 | The system must not display BR003 to MEM002 |
-| Borrow record information | Required record fields | BR001 / BR003 | The record displays record ID, borrowed book, borrow date, due date, and status |
+| Borrow record ownership | Own records | MEM002 views BR001 and BR004 | The system displays records belonging to MEM002 |
+| | Other member’s records | MEM002 tries to view BR003 of MEM006 | The system must not display BR003 to MEM002 |
+| Borrow record information | Required fields | BR001 | The record displays record ID, borrowed book, borrow date, due date, and status |
 
 
 > 💡 **Gợi ý kỹ thuật**: Sử dụng **Phân lớp tương đương (EP)** cho các phân vùng rời rạc, **Phân tích giá trị biên (BVA)** cho các phân vùng số (ví dụ: giới hạn 3 sách). Xem textbook §6.1–6.3.
@@ -120,6 +133,18 @@
 | TC-11 | <br>Reject borrowing when the member account status is "Suspended"                                            | \- Logged in as MEM004 (Status: Suspended).                                      | 1\. Go to Books tab.<br><br>2\. Select book BOOK001.<br><br>3\. Click "Borrow". | \- Member: MEM004<br><br>\- Book ID: BOOK001<br><br>\- Book Status: Available                                       | \- System denies borrowing<br><br>\- Expected Error: "The member's account is currently suspended." (Must not say expired).                                | REQ-04 | Decision Table, EP  |
 | TC-12 | <br><br>Reject borrowing when the member account status is "Expired"                                          | \- Logged in as MEM005 (Status: Expired).                                        | 1\. Go to Books tab.<br><br>2\. Select book BOOK001.<br><br>3\. Click "Borrow". | \- Member: MEM005<br><br>\- Book ID: BOOK001<br><br>\- Book Status: Available                                       | \- System denies borrowing<br><br>\- Expected Error: "The member's account has expired."                                                                   | REQ-04 | Decision Table, EP  |
 | TC-13 | <br>Reject borrowing when the member has already reached the maximum limit of 3 books                         | \- Logged in as a member who already has exactly 3 active borrows in the system. | 1\. Go to Books tab.<br><br>2\. Select book BOOK001.<br><br>3\. Click "Borrow". | \- Member: (MEM with 3 borrow records/3 books borrowed)<br><br>\- Book ID: BOOK001<br><br>\- Book Status: Available | \- System denies borrowing<br><br>\- Expected Error: "Member has reached the maximum limit of 3 books."                                                    | REQ-04 | Decision Table, BVA |
+| TC-15 | Verify that the librarian can view the book list | 1. The data has been reset. 2. The user is on the login page. | 1. Log in with `librarian@library.com`. 2. Open the **Books** tab. 3. Observe the displayed book list. | Account: `librarian@library.com` / `admin123` | The librarian can view the book list. Each book displays title, author, category, publication year, and status. | REQ-02 | EP |
+| TC-16 | Verify that a member can view the book list | 1. The data has been reset. 2. The user is on the login page. | 1. Log in with `ba.nguyen@email.com`. 2. Open the **Books** tab. 3. Observe the displayed book list. | Account: `ba.nguyen@email.com` / `password123` | The member can view the book list. Each book displays title, author, category, publication year, and status. | REQ-02 | EP |
+| TC-17 | Verify that an available book is displayed with correct information | 1. The data has been reset. 2. The user has logged in successfully. | 1. Open the **Books** tab. 2. Find BOOK001. 3. Observe the displayed book information. | Book: BOOK001 — `Lập trình Flutter cơ bản` | BOOK001 displays title `Lập trình Flutter cơ bản`, author `Nguyễn Minh Đức`, category `Công nghệ`, publication year `2023`, and status `Có sẵn`. | REQ-02 | EP |
+| TC-18 | Verify that a borrowed book is displayed with correct status | 1. The data has been reset. 2. The user has logged in successfully. | 1. Open the **Books** tab. 2. Find BOOK003. 3. Observe the book status. | Book: BOOK003 — `Kiểm thử phần mềm nhập môn` | BOOK003 is displayed with status `Đã mượn` because it is initially borrowed by MEM002. | REQ-02 | EP |
+| TC-19 | Verify book search by title | 1. The data has been reset. 2. The user has logged in successfully. | 1. Open the **Books** tab. 2. Enter `Flutter` in the search box. 3. Observe the result list. | Keyword: `Flutter` | The system displays BOOK001 — `Lập trình Flutter cơ bản`. Unrelated books are not displayed. | REQ-03 | EP |
+| TC-20 | Verify book search by author | 1. The data has been reset. 2. The user has logged in successfully. | 1. Open the **Books** tab. 2. Enter `Nguyễn Minh Đức` in the search box. 3. Observe the result list. | Keyword: `Nguyễn Minh Đức` | The system displays books written by Nguyễn Minh Đức, including BOOK001 and BOOK009. | REQ-03 | EP |
+| TC-21 | Verify case-insensitive search using lowercase keyword | 1. The data has been reset. 2. The user has logged in successfully. | 1. Open the **Books** tab. 2. Enter lowercase keyword `flutter`. 3. Observe the result list. | Keyword: `flutter` | The system still displays BOOK001 — `Lập trình Flutter cơ bản`, even though the keyword is entered in lowercase. | REQ-03 | EP |
+| TC-22 | Verify case-insensitive search using uppercase keyword | 1. The data has been reset. 2. The user has logged in successfully. | 1. Open the **Books** tab. 2. Enter uppercase keyword `FLUTTER`. 3. Observe the result list. | Keyword: `FLUTTER` | The system still displays BOOK001 — `Lập trình Flutter cơ bản`, even though the keyword is entered in uppercase. | REQ-03 | EP |
+| TC-23 | Verify search with no matching result | 1. The data has been reset. 2. The user has logged in successfully. | 1. Open the **Books** tab. 2. Enter `xyz_khong_ton_tai` in the search box. 3. Observe the result list. | Keyword: `xyz_khong_ton_tai` | The system displays no books and shows the message `Không tìm thấy sách`. | REQ-03 | EP |
+| TC-24 | Verify filtering books by the Technology category | 1. The data has been reset. 2. The user has logged in successfully. | 1. Open the **Books** tab. 2. Select or enter category `Công nghệ`. 3. Observe the result list. | Category: `Công nghệ` | The system displays only books in the `Công nghệ` category, such as BOOK001, BOOK002, BOOK003, BOOK005, BOOK008, BOOK009, BOOK010, and BOOK011. | REQ-03 | EP |
+| TC-25 | Verify that the librarian can view all borrow records | 1. The data has been reset. 2. The user is on the login page. | 1. Log in with `librarian@library.com`. 2. Open the **Borrow / Return** tab. 3. View the borrow record list. 4. Observe whether records of all members are displayed. | Account: `librarian@library.com` / `admin123`; Records: BR001, BR002, BR003, BR004, BR005 | The librarian can view all borrow records of all members, including BR001, BR002, BR003, BR004, and BR005. Each record displays record ID, borrowed book, borrow date, due date, and status. | REQ-08 | Decision Table, EP |
+| TC-26 | Verify that a member cannot view borrow records of another member | 1. The data has been reset. 2. The user is logged in as MEM002. | 1. Log in with `ba.nguyen@email.com`. 2. Open the **Borrow / Return** tab. 3. Open the borrow record lookup area if available. 4. Search for `MEM006`. 5. Observe whether BR003 is displayed. | Logged-in account: `ba.nguyen@email.com` / `password123`; Logged-in member: MEM002; Other member: MEM006; Record: BR003 | The system must not display BR003 to MEM002 because BR003 belongs to MEM006. A member can only view their own borrow records. | REQ-08 | Decision Table, EP |
 | TC-32 | Verify that a member can return their own currently borrowed book | 1. The data has been reset. 2. The user is logged in as MEM006. 3. BR003 exists in the initial seed data and belongs to MEM006. | 1. Log in with `biet.hoang@email.com`. 2. Open the **Borrow / Return** tab. 3. Find borrow record BR003 for BOOK013. 4. Click **Return Book**. 5. Open the **Books** tab. 6. Check the status of BOOK013. | Account: `biet.hoang@email.com` / `password123`; Member: MEM006; Borrow record: BR003; Book: BOOK013 | - The system allows MEM006 to return BOOK013 because BR003 belongs to MEM006. - The borrow record changes to “Đã trả”. - BOOK013 changes back to “Có sẵn”. | REQ-05 | EP |
 | TC-33 | Verify that the system displays an overdue warning when returning an overdue book | 1. The data has been reset. 2. BR001 exists in the initial seed data. 3. BR001 belongs to MEM002 and has due date 15/09/2024. | 1. Log in with `ba.nguyen@email.com`. 2. Open the **Borrow / Return** tab. 3. Find borrow record BR001 for BOOK003. 4. Click **Return Book**. 5. Observe the message displayed by the system. 6. Open the **Books** tab and check the status of BOOK003. | Account: `ba.nguyen@email.com` / `password123`; Member: MEM002; Borrow record: BR001; Book: BOOK003; Due date: 15/09/2024 | - The system allows the book to be returned. - The system displays an overdue warning because BR001 is overdue. - BOOK003 changes back to “Có sẵn”. | REQ-05 | BVA |
 | TC-34 | Verify that a member cannot view or return another member’s borrowed book | 1. The data has been reset. 2. The user is logged in as MEM002. 3. BR003 belongs to MEM006, not MEM002. | 1. Log in with `ba.nguyen@email.com`. 2. Open the **Borrow / Return** tab. 3. Open the borrow record lookup area if available. 4. Search for `MEM006`. 5. Check whether BR003 is displayed. 6. If BR003 is displayed, check whether the **Return Book** action is available. | Logged-in account: `ba.nguyen@email.com` / `password123`; Logged-in member: MEM002; Other member: MEM006; Borrow record: BR003; Book: BOOK013 | The system must not display BR003 to MEM002 and must not allow MEM002 to return BOOK013 because BR003 belongs to MEM006. | REQ-05, REQ-08 | Decision Table, EP |

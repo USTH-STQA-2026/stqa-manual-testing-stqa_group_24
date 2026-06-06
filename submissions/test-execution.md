@@ -15,6 +15,7 @@
 ## Kết quả chi tiết
 
 ### REQ-01: Login
+
 | Mã TC | Nhóm chức năng | Kết quả mong đợi (tóm tắt) | Kết quả thực tế | Kết luận | Minh chứng | Bug |
 |-------|---------------|---------------------------|-----------------|---------|-----------|----| 
 | TC-01 | Login | Redirected to the homepage successfully | Successfully redirected to the homepage and displayed username + role | Pass | ![Login Success Screen](./assets//REQ-01/Login-success.png) | - |

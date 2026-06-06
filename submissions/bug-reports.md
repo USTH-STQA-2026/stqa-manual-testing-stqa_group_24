@@ -6,8 +6,8 @@
 
 | Thông tin | |
 |---|---|
-| **Nhóm** | `<!-- Tên nhóm -->` |
-| **Ngày báo cáo** | `<!-- DD/MM/YYYY -->` |
+| **Nhóm** | GROUP 24 |
+| **Ngày báo cáo** | 06/06/2026 |
 
 ---
 
@@ -16,43 +16,44 @@
 | Thuộc tính | Chi tiết |
 |-----------|---------|
 | **Mã lỗi** | BUG-01 |
-| **TC liên quan** | `<!-- TC-xx -->` |
-| **REQ liên quan** | `<!-- REQ-xx -->` |
-| **Mức độ** | `<!-- High / Medium / Low -->` |
-| **Người phát hiện** | `<!-- Họ tên thành viên -->` |
-| **Ngày phát hiện** | `<!-- DD/MM/YYYY -->` |
-| **Trạng thái** | `<!-- Open / Closed -->` |
+| **TC liên quan** | TC-11 |
+| **REQ liên quan** | REQ-04 |
+| **Mức độ** | Medium |
+| **Người phát hiện** | Đoàn Quốc Việt |
+| **Ngày phát hiện** | 27/05/2026 |
+| **Trạng thái** | Open |
 
 **Tiêu đề:**
-`<!-- Mô tả hành vi lỗi cụ thể -->`
+System displays "Expired" error message instead of "Suspended" message when a suspended member attempts to borrow a book.
 
 **Môi trường:**
-- Trình duyệt: Chrome `<!-- version -->`
-- Hệ điều hành: `<!-- OS -->`
-- Ngôn ngữ giao diện: Tiếng Việt
+- Trình duyệt: Firefox 150.0.3
+- Hệ điều hành: Linux
+- Ngôn ngữ giao diện: Tiếng Việt/English
 
 **Điều kiện tiên quyết:**
-`<!-- VD: Trang đăng nhập đã mở, dữ liệu đã reset -->`
+The suspended user is at the Books tab and the data is refreshed.
 
 **Bước tái hiện:**
-1. `<!-- Bước 1 -->`
-2. `<!-- Bước 2 -->`
-3. `<!-- Bước 3 -->`
+1. Log into the library application using a suspended member account (e.g., Account: cu.le@email.com / Member ID: MEM004).<br>
+2. Navigate to the Books tab.<br>
+3. Select any available book (e.g., BOOK001 - Lập trình Flutter cơ bản) and click the "Borrow" button.<br>
+4. Confirm the transaction in the confirmation pop-up window.
 
 **Kết quả mong đợi:**
-`<!-- Kết quả đúng theo SRS -->`
+The system denies the borrowing request and displays the exact error message indicating account suspension: "The member's account is currently suspended."
 
 **Kết quả thực tế:**
-`<!-- Kết quả hệ thống thật sự trả về -->`
+The system successfully blocks the transaction but displays an incorrect red error banner at the bottom of the screen stating: "Thành viên đã hết hạn. Không thể mượn sách." (Member has expired. Cannot borrow book.)
 
 **Tác động:**
-`<!-- VD: Vi phạm quy tắc nghiệp vụ cốt lõi, cho phép mượn vượt giới hạn -->`
+Directly violates the explicit business rule in REQ-04 (suspended ≠ expired). This misleads both the library staff and the member regarding the true operational status of the account, causing confusion on how to resolve the restriction (e.g., attempting subscription renewal instead of lifting a penalty).
 
 **Minh chứng:**
-`<!-- Đính kèm ảnh chụp màn hình nếu có -->`
+![prove](./assets/REQ-04/11-3.png)
 
 **Đề xuất xử lý:**
-`<!-- Gợi ý cách sửa lỗi nếu có -->` 
+Update the backend verification logic or localization mapping for business rule constraints. Ensure that when checking member status, an account matching the Suspended flag triggers its dedicated warning string block instead of routing to the Expired message block.
 
 ---
 

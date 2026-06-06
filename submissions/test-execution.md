@@ -14,6 +14,7 @@
 
 ## Kết quả chi tiết
 
+### REQ-01: Login
 | Mã TC | Nhóm chức năng | Kết quả mong đợi (tóm tắt) | Kết quả thực tế | Kết luận | Minh chứng | Bug |
 |-------|---------------|---------------------------|-----------------|---------|-----------|----| 
 | TC-01 | Login | Redirected to the homepage successfully | Successfully redirected to the homepage and displayed username + role | Pass | ![Login Success Screen](./assets//REQ-01/Login-success.png) | - |
@@ -23,6 +24,9 @@
 | TC-05 | Login | Displays error message: "Vui lòng nhập email và mật khẩu". | Displayed error message under the email input field: "Vui lòng nhập email và mật khẩu" | Pass | ![Laziness took over](./assets/REQ-01/Blank-email.png) | - |
 | TC-06 | Login | Displays error message: "Vui lòng nhập email và mật khẩu". | Displayed error message under the email input field: "Vui lòng nhập email và mật khẩu" | Pass | ![](./assets/REQ-01/Blank-pass.png) | - |
 | TC-07 | Login | Displays error message: "Không tìm thấy thành viên". | Displayed error message under the email input field: "Không tìm thấy thành viên" | Pass | ![](./assets/REQ-01/Wrong-Email-Pass.png) | - |
+
+### REQ-04: Borrow Book
+
 | TC-08 | Borrow Book | Successful book borrowing with correct status transition and 14-day loan period calculation.                         | \- The member borrow BOOK001 succesfully.<br><br>\- Book status transitions to "Borrowed".<br><br>\- A 14-day loan period was added on the day MEM006 started borrowing BOOK001.<br><br>\- A green banner at the bottom of the screen stating: "Mượn sách thành công!" | Pass       | ![](./assets/REQ-04/08-1.png)<br>![](./assets/REQ-04/08-2.png)<br>![](./assets/REQ-04/08-3.png)<br>![](./assets/REQ-04/08-4.png) | \-     |
 | TC-09 | Borrow Book | The system denies the borrowing request if the book is unavailable                                                   | The system displays a disabled button labeled 'Borrowed' next to book BOOK003, preventing the user from triggering a borrowing request.                                                                                                                                | Pass       | ![](./assets/REQ-04/09-1.png) | \-     |
 | TC-10 | Borrow Book | The system denies the borrowing request if the book is lost                                                          | The system displays a disabled button labeled 'Lost' next to book BOOK007, preventing the user from triggering a borrowing request.                                                                                                                                    | Pass       | ![](./assets/REQ-04/10-1.png) | \-     |

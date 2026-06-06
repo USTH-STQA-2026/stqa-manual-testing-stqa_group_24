@@ -9,9 +9,13 @@
 | **Nhóm** | GROUP 24 |
 | **Ngày báo cáo** | 06/06/2026 |
 
+**Môi trường:**
+- Trình duyệt: Firefox 150.0.3
+- Hệ điều hành: Linux
+- Ngôn ngữ giao diện: Tiếng Việt/English
 ---
 
-## BUG-01
+## BUG-01: System displays "Expired" error message instead of "Suspended" message when a suspended member attempts to borrow a book.
 
 | Thuộc tính | Chi tiết |
 |-----------|---------|
@@ -22,14 +26,6 @@
 | **Người phát hiện** | Đoàn Quốc Việt |
 | **Ngày phát hiện** | 27/05/2026 |
 | **Trạng thái** | Open |
-
-**Tiêu đề:**
-System displays "Expired" error message instead of "Suspended" message when a suspended member attempts to borrow a book.
-
-**Môi trường:**
-- Trình duyệt: Firefox 150.0.3
-- Hệ điều hành: Linux
-- Ngôn ngữ giao diện: Tiếng Việt/English
 
 **Điều kiện tiên quyết:**
 The suspended user is at the Books tab and the data is refreshed.
@@ -57,7 +53,7 @@ Update the backend verification logic or localization mapping for business rule 
 
 ---
 
-## BUG-02
+## BUG-02: System fails to enforce maximum limit, allowing a member holding 3 active books to borrow a 4th book successfully.
 
 | Thuộc tính | Chi tiết |
 |-----------|---------|
@@ -68,14 +64,6 @@ Update the backend verification logic or localization mapping for business rule 
 | **Người phát hiện** | Đoàn Quốc Việt |
 | **Ngày phát hiện** | 27/05/2026 |
 | **Trạng thái** | Open |
-
-**Tiêu đề:**
-System fails to enforce maximum limit, allowing a member holding 3 active books to borrow a 4th book successfully.
-
-**Môi trường:**
-- Trình duyệt: Firefox 150.0.3
-- Hệ điều hành: Linux
-- Ngôn ngữ giao diện: Tiếng Việt/English
 
 **Điều kiện tiên quyết:**
 - The database contains a member account configured to have exactly 3 active, unreturned borrow records (e.g., Status: "Borrowed"), thereby hitting the maximum allowed limit.<br>

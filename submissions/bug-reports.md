@@ -86,8 +86,8 @@ Critical business rule violation. This off-by-one or missing conditional logic b
 
 **Minh chứng:**
 ![](./assets/REQ-04/13-1.png)<br>
-![](./assets/REQ=04/13-4.png)<br>
-![](./assets/REQ=04/13-5.png)
+![](./assets/REQ-04/13-4.png)<br>
+![](./assets/REQ-04/13-5.png)
 
 **Đề xuất xử lý:**
 Review the backend constraint validation inside the borrow processing controller. Ensure that a count query checking active loans handles strict inequality checks before saving the transaction to the database (e.g., verify that an if (activeLoans >= 3) rejection block handles the validation intercept properly prior to saving a new entry).

@@ -338,4 +338,4 @@ The error message is misleading. The librarian may think the email format is inv
 **Đề xuất xử lý:**
 Validate the email format first, then check whether the email already exists. If the email is duplicated, the system should display a duplicate-email error instead of an invalid-email error.
 
-<!-- Copy template BUG trên để thêm BUG-03, BUG-04, ... cho mỗi TC Fail -->
+---

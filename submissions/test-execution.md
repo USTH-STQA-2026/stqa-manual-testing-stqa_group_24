@@ -7,8 +7,8 @@
 |---|---|
 | **Nhóm** | Group 24 |
 | **Ngày thực thi** | 19/05/2026 |
-| **Trình duyệt** | Firefox 150.0.3 |
-| **Hệ điều hành** | Windows |
+| **Trình duyệt** | Google Chrome |
+| **Hệ điều hành** | Windows 11 |
 
 ---
 

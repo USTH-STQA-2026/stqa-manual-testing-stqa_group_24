@@ -1,3 +1,18 @@
+# Test Cases — Bảng trường hợp kiểm thử
+
+> **Hướng dẫn**: Viết tối thiểu **20 TC** phủ đủ các chức năng chính (REQ-01 → REQ-08).
+> Xem [examples/sample-test-case.md](../examples/sample-test-case.md) để hiểu cách viết TC tốt.
+> Tự tổ chức và phân nhóm test case theo cách hợp lý nhất.
+
+| Thông tin | |
+|---|---|
+| **Nhóm** | Group 24 |
+| **Ngày tạo** | 20/05/2026 |
+| **Hệ thống** | https://stqa.rbc.vn |
+| **Tham chiếu** | SRS v1.0 |
+
+---
+
 ## Bước 1: Mô hình hóa miền đầu vào — Input Domain Modeling (IDM)
 
 > 📖 **Textbook:** Chương 6 — *Input Domain Modeling*, Paul Ammann & Jeff Offutt.
@@ -5,16 +20,16 @@
 > **Trước khi viết Test Case**, nhóm **phải** phân tích miền đầu vào bằng bảng IDM bên dưới.
 > Mỗi chức năng cần xác định: **Đặc tính (Characteristic)**, **Phân vùng (Block/Partition)**, và **Giá trị đại diện (Value)**.
 
-### IDM — Đăng nhập / Login (REQ-01)
+### IDM — Đăng nhập (REQ-01)
 
-| Đặc tính (Characteristic) | Phân vùng (Block/Partition) | Giá trị đại diện (Value) | Kết quả mong đợi |
+| Đặc tính (Characteristic) | Phân vùng (Block) | Giá trị đại diện (Value) | Kết quả mong đợi |
 |---|---|---|---|
-| Email có tồn tại trong DB? | Có tồn tại | `librarian@library.com` | Đăng nhập thành công nếu mật khẩu đúng |
-| | Không tồn tại | `noone@email.com` | Hiển thị lỗi `Không tìm thấy thành viên` |
-| Mật khẩu có đúng? | Đúng | `admin123` | Đăng nhập thành công nếu email đúng |
-| | Sai | `wrongpass` | Hiển thị lỗi `Mật khẩu không đúng` |
-| Ô nhập có rỗng? | Không rỗng | `librarian@library.com` / `admin123` | Hệ thống xử lý đăng nhập bình thường |
-| | Rỗng | Email rỗng hoặc mật khẩu rỗng | Hiển thị lỗi `Vui lòng nhập email và mật khẩu` |
+| Email có tồn tại trong DB? | Có | `librarian@library.com` | Đăng nhập thành công |
+| | Không | `noone@email.com` | Thông báo lỗi |
+| Mật khẩu có đúng? | Đúng | `admin123` | Đăng nhập thành công |
+| | Sai | `wrongpass` | Thông báo lỗi |
+| Ô nhập có rỗng? | Không rỗng | (giá trị bất kỳ) | Xử lý bình thường |
+| | Rỗng | `""` | Thông báo "Vui lòng nhập..." |
 
 ### IDM — Xem danh sách sách / View Book List (REQ-02)
 
@@ -28,30 +43,28 @@
 | | Thất lạc | BOOK007 | Sách hiển thị trạng thái `Thất lạc` |
 | Cập nhật real-time | Sau khi trả sách | BOOK013 sau khi trả BR003 | Trạng thái sách đổi về `Có sẵn` ngay lập tức |
 
-### IDM — Tìm kiếm và lọc sách / Search and Filter Books (REQ-03)
+### IDM — Tìm kiếm sách (REQ-03)
 
-| Đặc tính (Characteristic) | Phân vùng (Block/Partition) | Giá trị đại diện (Value) | Kết quả mong đợi |
+| Đặc tính (Characteristic) | Phân vùng (Block) | Giá trị đại diện (Value) | Kết quả mong đợi |
 |---|---|---|---|
-| Từ khóa tìm kiếm | Tên sách tồn tại | `Flutter` | Hiển thị BOOK001 |
-| | Tên tác giả tồn tại | `Nguyễn Minh Đức` | Hiển thị BOOK001 và BOOK009 |
-| | Không tồn tại | `xyz_khong_ton_tai` | Hiển thị `Không tìm thấy sách` |
-| Phân biệt chữ hoa/thường | Chữ thường | `flutter` | Kết quả giống khi tìm `Flutter` |
-| | Chữ hoa | `FLUTTER` | Kết quả giống khi tìm `Flutter` |
-| Lọc theo thể loại | Đúng tên thể loại | `Công nghệ` | Hiển thị các sách thuộc thể loại `Công nghệ` |
-| | Khác chữ hoa/thường | `công nghệ` | Vẫn nên hiển thị các sách thuộc thể loại `Công nghệ` |
+| Từ khóa có tồn tại trong DB? | Có (tên sách) | `"Flutter"` | Hiển thị sách chứa "Flutter" |
+| | Có (tên tác giả) | `"Nguyễn"` | Hiển thị sách của tác giả Nguyễn |
+| | Không | `"XYZ123"` | Danh sách rỗng |
+| Phân biệt HOA/thường? | Chữ thường | `"flutter"` | Kết quả giống "Flutter" |
+| | Chữ HOA | `"FLUTTER"` | Kết quả giống "Flutter" |
 
-### IDM — Mượn sách / Borrow Book (REQ-04)
+### IDM — Mượn sách (REQ-04, REQ-05)
 
-| Đặc tính (Characteristic) | Phân vùng (Block/Partition) | Giá trị đại diện (Value) | Kết quả mong đợi |
+| Đặc tính (Characteristic) | Phân vùng (Block) | Giá trị đại diện (Value) | Kết quả mong đợi |
 |---|---|---|---|
-| Trạng thái sách | Có sẵn | BOOK001 | Cho phép mượn |
-| | Đã mượn | BOOK003 | Không cho phép mượn |
-| | Thất lạc | BOOK007 | Không cho phép mượn |
-| Trạng thái thành viên | Hoạt động | MEM006 | Cho phép mượn nếu sách hợp lệ và chưa vượt giới hạn |
-| | Tạm ngưng | MEM004 | Từ chối và hiển thị đúng lý do tạm ngưng |
-| | Hết hạn | MEM005 | Từ chối và hiển thị đúng lý do hết hạn |
-| Số sách đang mượn | Dưới giới hạn | Thành viên đang mượn dưới 3 sách | Cho phép mượn |
-| | Đạt giới hạn | Thành viên đang mượn đúng 3 sách | Từ chối vì đạt giới hạn 3 sách |
+| Trạng thái sách? | Có sẵn | BOOK001 | Cho phép mượn |
+| | Đang mượn | BOOK003 | Không cho phép |
+| | Thất lạc | BOOK007 | Không cho phép |
+| Trạng thái thành viên? | Hoạt động | MEM002 | Cho phép mượn |
+| | Tạm ngưng | MEM004 | Từ chối, thông báo lỗi |
+| | Hết hạn | MEM005 | Từ chối, thông báo lỗi |
+| Số sách đang mượn? | < 3 (BVA: 0, 1, 2) | MEM006 (0 sách) | Cho phép mượn |
+| | = 3 (BVA: giới hạn) | MEM đã mượn 3 sách | Từ chối, thông báo vượt giới hạn |
 
 ### IDM — Trả sách / Return Book (REQ-05)
 
@@ -119,12 +132,12 @@
 
 | Mã TC | Mục tiêu kiểm thử | Tiền điều kiện | Bước thực hiện | Dữ liệu đầu vào | Kết quả mong đợi | REQ | Kỹ thuật |
 |-------|-------------------|---------------|---------------|-----------------|------------------|-----|---------|
-| TC-08 | Verify successful borrowing for an active member with an available book | 1. The data has been reset. 2. The user is logged in as active member MEM006. | 1. Open the **Books** tab. 2. Select BOOK001. 3. Click **Borrow**. 4. Confirm the borrowing action. | Account: `biet.hoang@email.com` / `password123`; Member: MEM006; Book: BOOK001; Book status: Available | The system allows borrowing, creates a borrow record, sets the due date to 14 days after the borrow date, and changes the book status to borrowed. | REQ-04 | EP |
-| TC-09 | Reject borrowing when the selected book is already borrowed | 1. The data has been reset. 2. The user is logged in as active member MEM006. | 1. Open the **Books** tab. 2. Find BOOK003. 3. Check whether borrowing BOOK003 is allowed. | Account: `biet.hoang@email.com` / `password123`; Member: MEM006; Book: BOOK003; Book status: Borrowed by MEM002 | The system denies borrowing because BOOK003 is already borrowed. | REQ-04 | Decision Table |
-| TC-10 | Reject borrowing when the selected book is lost | 1. The data has been reset. 2. The user is logged in as active member MEM006. | 1. Open the **Books** tab. 2. Find BOOK007. 3. Check whether borrowing BOOK007 is allowed. | Account: `biet.hoang@email.com` / `password123`; Member: MEM006; Book: BOOK007; Book status: Lost | The system denies borrowing because BOOK007 is lost. | REQ-04 | Decision Table |
-| TC-11 | Reject borrowing when the member account is suspended | 1. The data has been reset. 2. The user is logged in as suspended member MEM004. | 1. Open the **Books** tab. 2. Select BOOK001. 3. Click **Borrow**. 4. Confirm the borrowing action. | Account: `cu.le@email.com` / `password123`; Member: MEM004; Member status: Suspended; Book: BOOK001 | The system denies borrowing and displays an error message indicating that the member account is suspended. | REQ-04 | Decision Table |
-| TC-12 | Reject borrowing when the member account is expired | 1. The data has been reset. 2. The user is logged in as expired member MEM005. | 1. Open the **Books** tab. 2. Select BOOK001. 3. Click **Borrow**. 4. Confirm the borrowing action. | Account: `binh.pham@email.com` / `password123`; Member: MEM005; Member status: Expired; Book: BOOK001 | The system denies borrowing and displays an error message indicating that the member account is expired. | REQ-04 | Decision Table |
-| TC-13 | Reject borrowing when the member has already reached the maximum limit of 3 books | 1. The data has been reset. 2. The test member already has exactly 3 active borrowed books before executing this test. | 1. Log in with the prepared member account. 2. Open the **Books** tab. 3. Select BOOK001. 4. Click **Borrow**. 5. Confirm the borrowing action. | Member: prepared member with exactly 3 active borrow records; Book: BOOK001; Book status: Available | The system denies borrowing and displays an error message indicating that the member has reached the maximum limit of 3 books. | REQ-04 | BVA |
+| TC-08 | <br><br>Verify successful borrowing for an active member with available borrowing slots and an available book | \- Logged in as MEM006(biet.hoang@email.com) (Status: Active, currently borrowing 1 books).            | 1\. Go to Books tab.<br><br>2\. Select book BOOK001.<br><br>3\. Click "Borrow". | \- Member: MEM006<br><br>\- Book ID: BOOK001<br><br>\- Book Status: Available                                       | \- System allows borrowing.<br><br>\- Due date is set to 14 days from the day the member start borrowing.<br><br>\- Book status transitions to "Borrowed". | REQ-04 | EP                  |
+| TC-09 | <br>Reject borrowing when the selected book is borrowed by another member                                     | \- Logged in as MEM006(biet.hoang@email.com) (Status: Active).                                         | 1\. Go to Books tab.<br><br>2\. Attempt to borrow book BOOK003.                 | \- Member: MEM006<br><br>\- Book ID: BOOK003<br><br>\- Book Status: Borrowed by MEM002                              | \- System denies borrowing.<br><br>\- Expected Error: "The book is currently unavailable (Already borrowed)."                                              | REQ-04 | Decision Table, EP  |
+| TC-10 | <br>Reject borrowing if a book's status is "Lost"                                                             | \- Logged in as MEM006(biet.hoang@email.com) (Status: Active).                                         | 1\. Go to Books tab.<br><br>2\. Attempt to borrow book BOOK007.                 | \- Member: MEM006<br><br>\- Book ID: BOOK007<br><br>\- Book Status: Lost                                            | \- System denies borrowing<br><br>\- Expected Error: "The book is currently unavailable (Lost)."                                                           | REQ-04 | Decision Table, EP  |
+| TC-11 | <br>Reject borrowing when the member account status is "Suspended"                                            | \- Logged in as MEM004(cu.le@email.com) (Status: Suspended).                                      | 1\. Go to Books tab.<br><br>2\. Select book BOOK001.<br><br>3\. Click "Borrow". | \- Member: MEM004<br><br>\- Book ID: BOOK001<br><br>\- Book Status: Available                                       | \- System denies borrowing<br><br>\- Expected Error: "The member's account is currently suspended." (Must not say expired).                                | REQ-04 | Decision Table, EP  |
+| TC-12 | <br><br>Reject borrowing when the member account status is "Expired"                                          | \- Logged in as MEM005(binh.pham@email.com) (Status: Expired).                                        | 1\. Go to Books tab.<br><br>2\. Select book BOOK001.<br><br>3\. Click "Borrow". | \- Member: MEM005<br><br>\- Book ID: BOOK001<br><br>\- Book Status: Available                                       | \- System denies borrowing<br><br>\- Expected Error: "The member's account has expired."                                                                   | REQ-04 | Decision Table, EP  |
+| TC-13 | <br>Reject borrowing when the member has already reached the maximum limit of 3 books                         | \- Logged in as a member who already has exactly 3 active borrows in the system. | 1\. Go to Books tab.<br><br>2\. Select book BOOK001.<br><br>3\. Click "Borrow". | \- Member: (MEM with 3 borrow records/3 books borrowed)<br><br>\- Book ID: BOOK001<br><br>\- Book Status: Available | \- System denies borrowing<br><br>\- Expected Error: "Member has reached the maximum limit of 3 books."                                                    | REQ-04 | Decision Table, BVA |
 
 ### REQ-02: Xem danh sách sách / View Book List
 

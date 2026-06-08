@@ -4,15 +4,15 @@
 > Xem [examples/sample-bug-report.md](../examples/sample-bug-report.md) để hiểu cách viết bug report tốt.
 > Mỗi bug cần: tiêu đề mô tả hành vi lỗi, bước tái hiện, expected vs actual, severity + giải thích.
 
-| Thông tin | |
+| Information | |
 |---|---|
-| **Nhóm** | GROUP 24 |
-| **Ngày báo cáo** | 06/06/2026 |
+| **Group** | GROUP 24 |
+| **Report Date** | 06/06/2026 |
 
-**Môi trường:**
-- Trình duyệt: Google Chrome
-- Hệ điều hành: Windows 11
-- Ngôn ngữ giao diện: Tiếng Việt/English
+**Environment:**
+- Browser: Google Chrome
+- Operating System: Windows 11
+- Interface Language: Vietnamese/English
 ---
 
 ## BUG-01: System displays "Expired" error message instead of "Suspended" message when a suspended member attempts to borrow a book.

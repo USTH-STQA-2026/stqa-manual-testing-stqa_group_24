@@ -256,53 +256,11 @@ Review the email validation logic. The system should accept emails in the format
 
 ---
 
-## BUG-07: The system allows adding a member with invalid email `user@domain`.
+## BUG-07: The system displays the wrong error message when adding a member with an existing email.
 
 | Thuộc tính | Chi tiết |
 |-----------|---------|
 | **Mã lỗi** | BUG-07 |
-| **TC liên quan** | TC-34 |
-| **REQ liên quan** | REQ-07 |
-| **Mức độ** | Medium |
-| **Người phát hiện** | Trần Quốc Việt |
-| **Ngày phát hiện** | 07/06/2026 |
-| **Trạng thái** | Open |
-
-**Điều kiện tiên quyết:**
-The data is refreshed. The user is logged in with the librarian account and is currently at the Add Member screen.
-
-**Bước tái hiện:**
-1. Log into the library application using account `librarian@library.com`.<br>
-2. Navigate to the Members tab.<br>
-3. Click the Add Member button.<br>
-4. Enter a full name.<br>
-5. Enter email `user@domain`.<br>
-6. Enter a phone number.<br>
-7. Click the "Add Member" button.
-
-**Kết quả mong đợi:**
-The system rejects the request and displays an invalid email error because `user@domain` does not contain a dot `.` in the domain part.
-
-**Kết quả thực tế:**
-The system creates a new member successfully and displays the message `Thêm thành viên thành công! Mã: MEM007`.
-
-**Tác động:**
-This violates the email validation rule in REQ-07. The system accepts invalid member data, which reduces data quality and may cause problems in later communication or account management.
-
-**Minh chứng:**
-![prove 1](./assets/REQ-07/TC-34-invalid-email-user-domain-input.png)<br>
-![prove 2](./assets/REQ-07/TC-34-invalid-email-user-domain-accepted.png)
-
-**Đề xuất xử lý:**
-Update the email validation logic so that the domain part must contain a dot `.`. The system should reject `user@domain`.
-
----
-
-## BUG-08: The system displays the wrong error message when adding a member with an existing email.
-
-| Thuộc tính | Chi tiết |
-|-----------|---------|
-| **Mã lỗi** | BUG-08 |
 | **TC liên quan** | TC-35 |
 | **REQ liên quan** | REQ-07 |
 | **Mức độ** | Medium |

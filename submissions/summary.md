@@ -1,35 +1,35 @@
-# Test Summary — Báo cáo tổng hợp kiểm thử
+# Test Summary — Test Summary Report
 
-> **Hướng dẫn**: Đây là hoạt động **Quality Assurance** — nhóm đánh giá chất lượng tổng thể của phần mềm, không chỉ liệt kê lỗi.
+> **Instructions**: This is a **Quality Assurance** activity — the team assesses the overall software quality, not just lists bugs.
 
 ---
 
-## 1. Thông tin nhóm
+## 1. Group Information
 
-| Mục | Thông tin |
+| Item | Information |
 |-----|----------|
-| **Nhóm** | Group 24 |
-| **Lớp** | ICT |
-| **Ngày báo cáo** | 07/06/2026 |
-| **Hệ thống kiểm thử** | https://stqa.rbc.vn — v1.0 |
+| **Group** | Group 24 |
+| **Class** | ICT |
+| **Report Date** | 07/06/2026 |
+| **Test System** | https://stqa.rbc.vn — v1.0 |
 
 ---
 
-## 2. Tổng quan kết quả
+## 2. Test Results Overview
 
-| Chỉ số | Giá trị |
+| Metric | Value |
 |--------|---------|
-| Tổng số test case | 39 |
+| Total Test Cases | 39 |
 | Pass | 30 |
 | Fail | 9 |
 | Blocked | 0 |
 | Not Run | 0 |
-| **Tỷ lệ Pass** | 76.92% |
-| **Số bug phát hiện** | 8 |
+| **Pass Rate** | 76.92% |
+| **Bugs Found** | 8 |
 
-### Phân bổ theo nhóm chức năng
+### Distribution by Functional Group
 
-| Nhóm chức năng | TC | Pass | Fail | Bug | Đánh giá |
+| Functional Group | TC | Pass | Fail | Bug | Assessment |
 |---------------|-----|------|------|-----|---------|
 | Login | 7 | 7 | 0 | 0 | Stable. Login works correctly for valid, invalid, and empty input cases. |
 | Borrow Book | 6 | 4 | 2 | 2 | Partially stable. Basic borrow restrictions work, but important business rules are violated. |
@@ -40,9 +40,9 @@
 | Member Management | 4 | 1 | 3 | 3 | Weak. Email validation and duplicate email handling have several issues. |
 | Borrow Record Lookup | 4 | 3 | 1 | 1 | Mostly stable, but member access control is not properly enforced. |
 
-### Phân bổ bug theo mức độ
+### Bug Distribution by Severity
 
-| Mức độ | Số lượng | Bug IDs |
+| Severity | Count | Bug IDs |
 |--------|---------|---------|
 | High | 2 | BUG-02, BUG-05 |
 | Medium | 6 | BUG-01, BUG-03, BUG-04, BUG-06, BUG-07, BUG-08 |
@@ -50,29 +50,29 @@
 
 ---
 
-## 3. Kỹ thuật thiết kế đã sử dụng
+## 3. Test Design Techniques Used
 
-| Kỹ thuật | Áp dụng cho REQ nào? | Số TC sử dụng | Giải thích cách áp dụng |
+| Technique | Applied to Which REQ? | Number of TCs | Explanation of Application |
 |----------|---------------------|---------------|------------------------|
-| Equivalence Partitioning (EP) | REQ-01, REQ-02, REQ-03, REQ-04, REQ-05, REQ-07, REQ-08 | 25 | EP was used to divide inputs into valid and invalid partitions, such as valid/invalid login fields, available/borrowed/lost books, valid/invalid email formats, own/other borrow records, and existing/non-existing search keywords. |
-| Boundary Value Analysis (BVA) | REQ-04, REQ-05, REQ-06 | 5 | BVA was used for boundary-related rules, such as the maximum limit of 3 borrowed books, overdue due dates, and records whose due date is less than or equal to the current date. |
-| Decision Table | REQ-01, REQ-04, REQ-05, REQ-06, REQ-07, REQ-08 | 13 | Decision Table was used for rules that depend on multiple conditions, such as login email/password combinations, book status, member status, user role, and borrow record ownership. |
+| Equivalence Partitioning (EP) | REQ-01, REQ-02, REQ-03, REQ-04, REQ-05, REQ-07, REQ-08 | 25 | EP was used to divide inputs into valid and invalid partitions, such as valid/invalid login fields, [...]
+| Boundary Value Analysis (BVA) | REQ-04, REQ-05, REQ-06 | 5 | BVA was used for boundary-related rules, such as the maximum limit of 3 borrowed books, overdue due dates, and records whose due date[...]
+| Decision Table | REQ-01, REQ-04, REQ-05, REQ-06, REQ-07, REQ-08 | 13 | Decision Table was used for rules that depend on multiple conditions, such as login email/password combinations, book statu[...]
 
 ---
 
-## 4. Phân tích chất lượng phần mềm
+## 4. Software Quality Analysis
 
-### 4.1. Điểm mạnh
+### 4.1. Strengths
 
 - The login function is reliable. All login test cases passed, including valid login, wrong email, wrong password, empty email, empty password, and combined invalid input.
 - The book list function works well. The system displays book information and book status correctly.
 - The search function works correctly for title, author, lowercase keyword, uppercase keyword, and no-result cases.
 - The overdue checking function works correctly when triggered by the librarian. The system updates overdue records and prevents normal members from accessing the overdue checking function.
-- Basic borrow and return flows work in normal cases, such as borrowing an available book and returning the member’s own borrowed book.
+- Basic borrow and return flows work in normal cases, such as borrowing an available book and returning the member's own borrowed book.
 
-### 4.2. Điểm yếu
+### 4.2. Weaknesses
 
-- The system has a serious access control issue. A member can view and return another member’s borrow record. This affects both Return Book and Borrow Record Lookup.
+- The system has a serious access control issue. A member can view and return another member's borrow record. This affects both Return Book and Borrow Record Lookup.
 - The borrowing limit rule is not enforced correctly. A member who already has 3 active borrowed books can still borrow another book.
 - Member Management has several email validation problems. The system rejects a valid email, accepts an invalid email, and displays the wrong message for duplicate email.
 - The system does not display an overdue warning when an overdue book is returned.
@@ -81,13 +81,13 @@
 
 ---
 
-## 5. Đề xuất ưu tiên sửa lỗi
+## 5. Bug Fix Priority Recommendations
 
-> Tiêu chí ưu tiên: nhóm ưu tiên sửa các lỗi có mức độ nghiêm trọng cao trước, đặc biệt là lỗi ảnh hưởng đến quyền truy cập dữ liệu, quy tắc nghiệp vụ chính và tính đúng đắn của dữ liệu.
+> Priority Criteria: the team prioritizes fixing high-severity bugs first, especially bugs affecting data access rights, business rules [...]
 
-| Thứ tự | Bug | Mức độ | Lý do ưu tiên |
-|--------|-----|--------|---------------|
-| 1 | BUG-05 | High | This is the most serious issue because a member can view and return another member’s borrowed book. It violates access control and can modify another user’s data. |
+| Priority | Bug | Severity | Priority Reason |
+|--------|-----|---------|---------------|
+| 1 | BUG-05 | High | This is the most serious issue because a member can view and return another member's borrowed book. It violates access control and can modify another user's data. |
 | 2 | BUG-02 | High | The system allows a member to exceed the maximum borrowing limit of 3 books, which violates a core borrowing rule and affects inventory control. |
 | 3 | BUG-06 | Medium | The librarian cannot add a new member with a valid email format, which blocks a normal member management workflow. |
 | 4 | BUG-07 | Medium | The system accepts invalid email data, which reduces data quality and violates the email validation rule. |
@@ -98,17 +98,17 @@
 
 ---
 
-## 6. Kết luận
+## 6. Conclusion
 
 Overall, the system is **not ready for release**.
 
-Although several basic functions work correctly, such as login, viewing the book list, searching books, checking overdue records, and basic borrow/return flows, the system still contains important defects. The most serious problems are related to access control, borrowing limit enforcement, and member email validation.
+Although several basic functions work correctly, such as login, viewing the book list, searching books, checking overdue records, and basic borrow/return flows, the system still contains importan[...]
 
-The system should not be released until the high-severity issues are fixed, especially BUG-05 and BUG-02. After fixing these bugs, the team should rerun the related test cases and perform regression testing on Borrow Book, Return Book, Borrow Record Lookup, and Member Management.
+The system should not be released until the high-severity issues are fixed, especially BUG-05 and BUG-02. After fixing these bugs, the team should rerun the related test cases and perform regress[...]
 
 ---
 
-## 7. Bài học rút ra
+## 7. Lessons Learned
 
 - Test cases should be designed directly from the SRS because the SRS is the main source of truth for expected results.
 - Negative test cases are important because many serious bugs were found in invalid or restricted scenarios.
@@ -118,8 +118,8 @@ The system should not be released until the high-severity issues are fixed, espe
 
 ---
 
-## 8. Khai báo sử dụng AI
+## 8. AI Usage Declaration
 
-| Công cụ AI | Dùng cho phần nào | Bạn đã kiểm tra/chỉnh sửa thế nào |
+| AI Tool | Used For Which Section | How Did You Review/Edit |
 |------------|-------------------|-----------------------------------|
-| ChatGPT | Support writing and improving test cases, test execution, bug reports, and summary. | The group reviewed the generated content, compared it with the SRS, checked it against actual screenshots and execution results, and manually edited the final files before submission. |
+| ChatGPT | Support writing and improving test cases, test execution, bug reports, and summary. | The group reviewed the generated content, compared it with the SRS, checked it against actual scr[...]

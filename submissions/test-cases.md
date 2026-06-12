@@ -110,6 +110,19 @@
 
 > 💡 **Gợi ý kỹ thuật**: Sử dụng **Phân lớp tương đương (EP)** cho các phân vùng rời rạc, **Phân tích giá trị biên (BVA)** cho các phân vùng số hoặc điều kiện giới hạn, và **Bảng quyết định (Decision Table)** cho các luật kết hợp nhiều điều kiện như vai trò người dùng, trạng thái sách, trạng thái thành viên và quyền truy cập.
 
+### Decision Table for REQ-04 (Borrow Book)
+
+| Condition                        | TC-08     | TC-09    | TC-10 | TC-11     | TC-12     | TC-13     |
+| -------------------------------- | --------- | -------- | ----- | --------- | --------- | --------- |
+| Book status                      | Available | Borrowed | Lost  | Available | Available | Available |
+| Member status                    | Active    | \-       | \-    | Suspended | Expired   | Active    |
+| Book loaned                      | <3        | \-       | \-    | \-        | \-        | 3         |
+|                                  |           |          |       |           |           |           |
+| Action                           |           |          |       |           |           |           |
+| Allow loaning                    | x         |          |       |           |           |           |
+| Not allow loaning                |           | x        | x     |           |           |           |
+| Reject and notify specific error |           |          |       | x         | x         | x         |
+
 ---
 
 ## Bước 2: Test Cases
